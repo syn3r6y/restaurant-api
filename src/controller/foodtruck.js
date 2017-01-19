@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { Router } from 'express';
 import FoodTruck from '../model/foodtruck';
 import Review from '../model/review';
+import { authenticate } from '../middleware/authMiddleware';
 
 export default ({ config, db }) => {
     let api = Router();
@@ -9,7 +10,7 @@ export default ({ config, db }) => {
     // v1/foodtruck/add
     
     // POST method
-    api.post('/add', (req, res) => {
+    api.post('/add', authenticate, (req, res) => {
         let newFoodTruck = new FoodTruck();
         newFoodTruck.name = req.body.name;
         newFoodTruck.foodType = req.body.foodType;
