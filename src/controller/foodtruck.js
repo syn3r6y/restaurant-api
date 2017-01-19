@@ -1,64 +1,64 @@
 import mongoose from 'mongoose';
 import { Router } from 'express';
-import Restaurant from '../model/restaurant';
+import FoodTruck from '../model/foodtruck';
 
 export default ({ config, db }) => {
     let api = Router();
 
-    // v1/restaurant/add
+    // v1/foodtruck/add
     
     // POST method
     api.post('/add', (req, res) => {
-        let newRest = new Restaurant();
-        newRest.name = req.body.name;
+        let newFoodTruck = new FoodTruck();
+        newFoodTruck.name = req.body.name;
 
-        newRest.save(err => {
+        newFoodTruck.save(err => {
             if(err){
                 res.send(err);
             } else {
-                res.json({ message: 'Restaurant saved successfully.' });
+                res.json({ message: 'Food Truck saved successfully.' });
             }
         });
     });
 
-    // v1/restaurant/
+    // v1/foodtruck/
 
     // GET method
     api.get('/', (req,res) => {
-        Restaurant.find({}, (err, restaurants) => {
+        FoodTruck.find({}, (err, foodTrucks) => {
             if(err){
                 res.send(err);
             } else{
-                res.json(restaurants);
+                res.json(foodTrucks);
             }
         });
     });
 
-    // v1/restaurant/:id
+    // v1/foodtruck/:id
 
     // GET method returning single object
     api.get('/:id', (req,res) => {
-        Restaurant.findById(req.params.id, (err, restaurant) => {
+        FoodTruck.findById(req.params.id, (err, foodTruck) => {
             if(err){
                 res.send(err);
             } else{
-                res.json(restaurant);
+                res.json(foodTruck);
             }
         });
     });
 
     // PUT method to update
     api.put('/:id', (req,res) => {
-        Restaurant.findById(req.params.id, (err, restaurant) => {
+        FoodTruck.findById(req.params.id, (err, foodTruck) => {
             if(err){
                 res.send(err);
             } else{
-                restaurant.name = req.body.name;
-                restaurant.save(err => {
+                foodTruck.name = req.body.name;
+                foodTruck.save(err => {
                     if(err){
                         res.send(err);
                     } else{
-                        res.json({ message: "Restaurant info udpated." });
+                        res.json({ message: "Food truck info udpated." });
                     }
                 });
             }
@@ -66,13 +66,13 @@ export default ({ config, db }) => {
     });
 
     api.delete('/:id', (req,res) => {
-        Restaurant.remove({
+        FoodTruck.remove({
             _id: req.params.id
-        }, (err, restaurant) => {
+        }, (err, foodtruck) => {
             if(err){
                 res.send(err);
             } else {
-                res.json({ message: "Restaurant successfully removed." });
+                res.json({ message: "Food Truck successfully removed." });
             }
         });
     });
